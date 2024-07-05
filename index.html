@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrápame si puedes</title>
+    <style>
+        body {
+            text-align: center;
+            padding-top: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 150%;
+            background: black;
+            color: aliceblue;
+            display: block;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            border-style: solid;
+            border-radius: 10px;
+            border-color: blueviolet;
+        }
+
+        #speedDisplay {
+            text-align: end;
+            color: yellow;
+            margin-right: 5%;
+        }
+
+        #target {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: yellowgreen;
+            border-radius: 50%;
+            transition: top 0.5s, left 0.5s;
+        }
+
+        #target:hover {
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <h1>Atrápame si puedes</h1>
+    <div id="game-container">
+        <div id="target"></div>
+        <p id="speedDisplay">Velocidad: <span id="speed">0</span></p>
+        <p id="scoreDisplay">Puntos: <span id="score">0</span></p>
+    </div>
+    <script>
+        let target = document.getElementById("target");
+        let scoreDisplay = document.getElementById("score");
+        let speedDisplay = document.getElementById("speed");
+        let score = 0;
+        let speed = 1;
+
+        target.addEventListener("click", function() {
+            // Incrementar puntuación y velocidad
+            score++;
+            speed++;
+            scoreDisplay.innerHTML = score;
+            speedDisplay.innerHTML = speed;
+            moveTarget();
+        });
+
+        const containerWidth = document.getElementById("game-container").offsetWidth;
+        const containerHeight = document.getElementById("game-container").offsetHeight;
+        const targetSize = target.offsetWidth;
+        const maxX = containerWidth - targetSize;
+        const maxY = containerHeight - targetSize;
+
+        function moveTarget() {
+            let randomX = Math.floor(Math.random() * maxX);
+            let randomY = Math.floor(Math.random() * maxY);
+            target.style.left = randomX + "px";
+            target.style.top = randomY + "px";
+            setTimeout(moveTarget, 2000 / speed);
+        }
+
+        // Mover el objetivo inicialmente
+        moveTarget();
+    </script>
+</body>
+</html>
